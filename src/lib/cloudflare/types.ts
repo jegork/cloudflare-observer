@@ -1,31 +1,5 @@
-export type R2ActionType =
-  | "ListBuckets"
-  | "PutBucket"
-  | "ListObjects"
-  | "PutObject"
-  | "CopyObject"
-  | "CompleteMultipartUpload"
-  | "CreateMultipartUpload"
-  | "ListMultipartUploads"
-  | "UploadPart"
-  | "UploadPartCopy"
-  | "ListParts"
-  | "PutBucketEncryption"
-  | "PutBucketCors"
-  | "PutBucketLifecycleConfiguration"
-  | "HeadBucket"
-  | "HeadObject"
-  | "GetObject"
-  | "UsageSummary"
-  | "GetBucketEncryption"
-  | "GetBucketLocation"
-  | "GetBucketCors"
-  | "GetBucketLifecycleConfiguration"
-  | "DeleteObject"
-  | "DeleteBucket"
-  | "AbortMultipartUpload"
-
-export const R2_CLASS_A_OPERATIONS: R2ActionType[] = [
+// R2 operation types derived from arrays (single source of truth)
+export const R2_CLASS_A_OPERATIONS = [
   "ListBuckets",
   "PutBucket",
   "ListObjects",
@@ -40,9 +14,9 @@ export const R2_CLASS_A_OPERATIONS: R2ActionType[] = [
   "PutBucketEncryption",
   "PutBucketCors",
   "PutBucketLifecycleConfiguration",
-]
+] as const
 
-export const R2_CLASS_B_OPERATIONS: R2ActionType[] = [
+export const R2_CLASS_B_OPERATIONS = [
   "HeadBucket",
   "HeadObject",
   "GetObject",
@@ -51,7 +25,14 @@ export const R2_CLASS_B_OPERATIONS: R2ActionType[] = [
   "GetBucketLocation",
   "GetBucketCors",
   "GetBucketLifecycleConfiguration",
-]
+  "DeleteObject",
+  "DeleteBucket",
+  "AbortMultipartUpload",
+] as const
+
+export type R2ActionType =
+  | (typeof R2_CLASS_A_OPERATIONS)[number]
+  | (typeof R2_CLASS_B_OPERATIONS)[number]
 
 export interface R2OperationsGroup {
   dimensions: {
@@ -67,22 +48,6 @@ export interface R2StorageGroup {
     payloadSize: number
     metadataSize: number
     objectCount: number
-  }
-}
-
-export interface WorkersInvocation {
-  dimensions: {
-    scriptName: string
-    status: string
-  }
-  sum: {
-    requests: number
-    errors: number
-    subrequests: number
-  }
-  quantiles: {
-    cpuTimeP50: number
-    cpuTimeP99: number
   }
 }
 
@@ -160,32 +125,6 @@ export interface D1StorageGroup {
   }
   dimensions: {
     databaseId: string
-  }
-}
-
-export interface ImagesGroup {
-  sum: {
-    uniqueTransformations: number
-    originalImagesStored: number
-    imagesDelivered: number
-  }
-}
-
-export interface WorkersAIGroup {
-  sum: {
-    tokens: number
-  }
-  dimensions: {
-    modelId: string
-  }
-}
-
-export interface VectorizeGroup {
-  sum: {
-    queryVectorDimensions: number
-  }
-  max: {
-    storedVectorDimensions: number
   }
 }
 

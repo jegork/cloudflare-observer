@@ -1,21 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import type { CloudflareUsageData } from "@/lib/cloudflare/types"
 import { WORKERS_PAID_LIMITS } from "@/lib/cloudflare/types"
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount)
-}
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  })
-}
+import { formatCurrency, formatDate } from "@/lib/formatters"
 
 interface CostSummaryProps {
   data: CloudflareUsageData
