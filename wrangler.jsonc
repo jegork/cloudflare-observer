@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cloudflare-observer",
+  "compatibility_date": "2025-01-04",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  // Environment variables - set these via wrangler secret or dashboard
+  // Run: pnpm wrangler secret put CLOUDFLARE_ACCOUNT_ID
+  // Run: pnpm wrangler secret put CLOUDFLARE_API_TOKEN
+  // Run: pnpm wrangler secret put CLOUDFLARE_EMAIL
+  "vars": {
+    // Non-secret vars can go here
+  }
+}
